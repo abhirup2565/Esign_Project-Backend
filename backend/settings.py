@@ -152,3 +152,5 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,                 # old refresh token becomes invalid
     "AUTH_HEADER_TYPES": ("Bearer",),                 # so headers look like: Authorization: Bearer <token>
 }
+
+AUTH_USER_MODEL = 'users.CustomUser'
