@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
+from users.permissions import IsManager
 
 SETU_BASE_URL = "https://dg-sandbox.setu.co/api"
 SETU_API_KEY = "your_setu_api_key_here"
@@ -19,6 +20,7 @@ class ProtectedView(APIView):
 
 
 class Create_Document(APIView):
+    permission_classes = [IsManager]
     def post(self,request):
         """
         Uploads a document to Setu API
@@ -51,6 +53,7 @@ class Create_Document(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Create_Signature(APIView):
+    permission_classes = [IsManager]
     def post(self,request):
         """
         Creates a signature request for uploaded document
@@ -84,6 +87,7 @@ class Signature_Status(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Get_Document(APIView):
+    permission_classes = [AllowAny]
     def get(self,request, signature_id):
         """
         Download link for signed document
