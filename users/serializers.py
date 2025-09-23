@@ -4,19 +4,14 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        # Add custom claims
-        token['user_id'] = user.id
-        token['is_manager'] = user.groups.filter(name='Managers').exists()
-        return token
-    
     def validate(self, attrs):
         data = super().validate(attrs)
-        # Add extra fields in login response
-        data['user_id'] = self.user.id
-        data['is_manager'] = self.user.groups.filter(name='Managers').exists()
+
+        # Add extra fields to the response
+        data.update({
+            "user_id": self.user.id,
+            "is_manager": self.user.is_staff,  # manager flag
+        })
         return data
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -24,11 +19,25 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "is_manager","dob"]
+        fields = ["username", "password", "is_staff","dob"]
 
     def create(self, validated_data):
-        password = validated_data.pop("password")
-        user = User(**validated_data)
-        user.set_password(password)
-        user.save()
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            dob=validated_data.get("dob"),
+            is_staff=validated_data.get("is_staff", False),
+            password=validated_data["password"],
+        )
         return user
+    
+class UserListSerializer(serializers.ModelSerializer):
+    identifier = serializers.IntegerField(source="id")
+    displayName = serializers.CharField(source="username")
+    birthYear = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ["identifier", "displayName", "birthYear"]
+
+    def get_birthYear(self, obj):
+        return obj.dob.year if obj.dob else None

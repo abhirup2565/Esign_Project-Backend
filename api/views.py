@@ -50,6 +50,7 @@ class Create_Document(APIView):
             return Response(response.json(), status=response.status_code)
 
         except Exception as e:
+            print("SIGNATURE ERROR:", e)
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Create_Signature(APIView):
@@ -59,7 +60,7 @@ class Create_Signature(APIView):
         Creates a signature request for uploaded document
         """
         try:
-            payload = request.data  # should contain: documentId,reason,signers[]
+            payload = request.data  # should contain: documentId,signers[]
             response = requests.post(
                 f"{SETU_BASE_URL}/signature",
                 json=payload,
@@ -68,6 +69,7 @@ class Create_Signature(APIView):
             return Response(response.json(), status=response.status_code)
 
         except Exception as e:
+            print("SIGNATURE ERROR:", e)
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class Signature_Status(APIView):

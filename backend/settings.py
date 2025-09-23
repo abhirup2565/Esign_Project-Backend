@@ -148,8 +148,6 @@ from datetime import timedelta
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),   # short-lived Access TOKEN
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),      # longer-lived Refresh Token
-    "ROTATE_REFRESH_TOKENS": True,                    # issue new refresh on refresh
-    "BLACKLIST_AFTER_ROTATION": True,                 # old refresh token becomes invalid
     "AUTH_HEADER_TYPES": ("Bearer",),                 # so headers look like: Authorization: Bearer <token>
 }
 
