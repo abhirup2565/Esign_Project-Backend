@@ -2,8 +2,13 @@ import requests
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework import status
 from users.permissions import IsManager
+from .serializers import SignatureSerializer
+from .models import Signature,Signer
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 SETU_BASE_URL = "https://dg-sandbox.setu.co/api"
 SETU_API_KEY = "your_setu_api_key_here"
@@ -59,6 +64,7 @@ class Create_Signature(APIView):
         """
         Creates a signature request for uploaded document
         """
+        from .utils import save_signature_response
         try:
             payload = request.data  # should contain: documentId,signers[]
             response = requests.post(
@@ -66,6 +72,8 @@ class Create_Signature(APIView):
                 json=payload,
                 headers={**headers, "Content-Type": "application/json"}
             )
+            response_data = response.json()
+            save_signature_response(response_data)
             return Response(response.json(), status=response.status_code)
 
         except Exception as e:
@@ -102,3 +110,8 @@ class Get_Document(APIView):
             return Response(response.json(), status=response.status_code)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class StatusView(generics.ListAPIView):
+    queryset = Signature.objects.all()
+    serializer_class = SignatureSerializer
+    permission_classes = [IsManager]
