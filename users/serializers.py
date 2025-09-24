@@ -9,6 +9,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add extra fields to the response
         data.update({
+            "user_username":self.user.username,
             "user_id": self.user.id,
             "is_manager": self.user.is_staff,  # manager flag
         })
