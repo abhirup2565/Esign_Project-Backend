@@ -4,10 +4,11 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import status
+from django.contrib.auth import get_user_model
 from users.permissions import IsManager
 from .serializers import SignatureSerializer
-from .models import Signature,Signer
-from django.contrib.auth import get_user_model
+from .models import Signature
+
 User = get_user_model()
 
 SETU_BASE_URL = "https://dg-sandbox.setu.co/api"
@@ -115,3 +116,10 @@ class StatusView(generics.ListAPIView):
     queryset = Signature.objects.all()
     serializer_class = SignatureSerializer
     permission_classes = [IsManager]
+
+class DashboardView(generics.ListAPIView):
+    serializer_class = SignatureSerializer
+
+    def get_queryset(self):
+        user = self.request.user  # get the logged-in user
+        return Signature.objects.filter(signers__user=user)

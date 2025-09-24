@@ -4,7 +4,8 @@ from .views import (Create_Document,
                     Create_Signature,
                     Signature_Status,
                     ProtectedView,
-                    StatusView)
+                    StatusView,
+                    DashboardView)
 
 urlpatterns = [
     path("documents/", Create_Document.as_view(), name="create_document"),
@@ -13,5 +14,6 @@ urlpatterns = [
     path("documents/<str:signature_id>/", Get_Document.as_view(), name="get_document"),
     path("protected/", ProtectedView.as_view(), name="protected_view"),
     path("status/", StatusView.as_view(), name="Status_View"),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
     
 ]

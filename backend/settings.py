@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework_simplejwt',
+    "django_crontab",
     'api',
     'users'
 ]
@@ -152,3 +153,8 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+CRONJOBS = [
+    # every 5 minutes
+    ('*/5 * * * *', 'signatures.cron.poll_signatures'),
+]
