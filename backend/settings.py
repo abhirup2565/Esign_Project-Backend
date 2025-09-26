@@ -126,7 +126,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Allows frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # vite dev
-    "https://esign-project-hn5rmnmw9-abhirups-projects-7f9d618e.vercel.app", 
+    "https://esign-project-oqxqy88lh-abhirups-projects-7f9d618e.vercel.app", 
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
