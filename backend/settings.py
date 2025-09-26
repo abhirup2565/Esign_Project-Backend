@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-gq^=%j(^jf0=#ltq36h*bodm*qw^)p8c-&rfdf#1a7ji-(_7*8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["esign-project-backend.onrender.com"]
 
 
 # Application definition
