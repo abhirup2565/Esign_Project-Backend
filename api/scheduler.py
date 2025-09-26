@@ -16,7 +16,6 @@ headers = {
 }
 
 def poll_signature():
-    print("Polling signature")
     signatures = Signature.objects.filter(complete=False)  # only check incomplete ones
     for signature in signatures:
         try:
