@@ -125,10 +125,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allows frontend
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",   # Vite local
-    "https://esign-project.vercel.app",  # Production
+    "http://localhost:5173",  # vite dev
+    "https://esign-project-hn5rmnmw9-abhirups-projects-7f9d618e.vercel.app", 
 ]
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # REST JWT 
