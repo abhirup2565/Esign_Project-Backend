@@ -8,22 +8,22 @@ from django.contrib.auth import get_user_model
 from users.permissions import IsManager
 from .serializers import SignatureSerializer
 from .models import Signature
-
+from django.conf import settings
 User = get_user_model()
 
-SETU_BASE_URL = "https://dg-sandbox.setu.co/api"
-SETU_API_KEY = "your_setu_api_key_here"
+SETU_BASE_URL = settings.SETU_BASE_URL
+
 
 headers = {
-    'x-client-id': '6faa7c17-2977-437a-8c73-30bf40c2edff',
-    'x-client-secret': 'GqNvWr5md8LYTrIQTnAzygNQrtvIXpMR',
-    'x-product-instance-id': '07451d5a-6091-4e58-8f25-30771aaccb96'
+    'x-client-id': settings.X_CLIENT_ID,
+    'x-client-secret': settings.X_CLIENT_SECRET,
+    'x-product-instance-id': settings.X_PRODUCT_INSTANCE_ID
 }
 
-class ProtectedView(APIView):
-    def get(self, request):
-        return Response({"message": f"Hello {request.user.username}, you are authenticated!"})
 
+"""
+Default Permission is set to IsAuthenticated in Settings
+"""
 
 class Create_Document(APIView):
     permission_classes = [IsManager]
@@ -113,11 +113,17 @@ class Get_Document(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class StatusView(generics.ListAPIView):
+    """
+        Send info of all the Signatures
+    """
     queryset = Signature.objects.all()
     serializer_class = SignatureSerializer
     permission_classes = [IsManager]
 
 class DashboardView(generics.ListAPIView):
+    """
+        Send info of Signatures associated with user
+    """
     serializer_class = SignatureSerializer
 
     def get_queryset(self):

@@ -20,7 +20,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "password", "is_staff","dob"]
+        fields = ["username", "password", "is_staff","dob"] 
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -38,7 +38,7 @@ class UserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["identifier", "displayName", "birthYear"]
+        fields = ["identifier", "displayName", "birthYear"] #Parameters required by SETU API
 
     def get_birthYear(self, obj):
         return obj.dob.year if obj.dob else None

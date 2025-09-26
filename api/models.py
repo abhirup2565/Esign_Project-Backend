@@ -13,7 +13,7 @@ class Signature(models.Model):
     def __str__(self):
         return f"Signature {self.signature_id} for Document {self.document_id}"
 
-
+"""Avoided direct Signature to user mapping, to save signers additional info for each assocciated Signature"""
 class Signer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="signatures")
     signature = models.ForeignKey(Signature, on_delete=models.CASCADE, related_name="signers")

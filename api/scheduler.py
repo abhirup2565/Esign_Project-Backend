@@ -2,10 +2,18 @@ import atexit
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from .models import Signature, Signer
 
 scheduler = BackgroundScheduler()
 User = get_user_model()
+SETU_BASE_URL = settings.SETU_BASE_URL
+
+headers = {
+    'x-client-id': settings.X_CLIENT_ID,
+    'x-client-secret': settings.X_CLIENT_SECRET,
+    'x-product-instance-id': settings.X_PRODUCT_INSTANCE_ID
+}
 
 def poll_signature():
     print("Polling signature")
@@ -13,7 +21,7 @@ def poll_signature():
     for signature in signatures:
         try:
             resp = requests.get(
-                f"https://dg-sandbox.setu.co/api/signature/{signature.signature_id}/",
+                f"{SETU_BASE_URL}/signature/{signature.signature_id}/",
                 headers={
                     'x-client-id': '6faa7c17-2977-437a-8c73-30bf40c2edff',
                     'x-client-secret': 'GqNvWr5md8LYTrIQTnAzygNQrtvIXpMR',
@@ -45,8 +53,8 @@ def poll_signature():
             print(f"Error polling {signature.signature_id}: {e}")
 
 def start_scheduler():
-    # Schedule polling every 5 minutes
-    scheduler.add_job(poll_signature, 'interval', seconds=5)
+    # Schedule polling every 10 seconds
+    scheduler.add_job(poll_signature, 'interval', seconds=10)
     scheduler.start()
     # Shut down gracefully on exit
     atexit.register(lambda: scheduler.shutdown())
