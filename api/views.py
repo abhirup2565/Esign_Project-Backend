@@ -116,7 +116,7 @@ class StatusView(generics.ListAPIView):
     """
         Send info of all the Signatures
     """
-    queryset = Signature.objects.all()
+    queryset = Signature.objects.all().order_by('-created_at') 
     serializer_class = SignatureSerializer
     permission_classes = [IsManager]
 
@@ -128,4 +128,4 @@ class DashboardView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user  # get the logged-in user
-        return Signature.objects.filter(signers__user=user)
+        return Signature.objects.filter(signers__user=user).order_by('-created_at') 
