@@ -9,6 +9,9 @@ from users.permissions import IsManager
 from .serializers import SignatureSerializer
 from .models import Signature
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 User = get_user_model()
 
 SETU_BASE_URL = settings.SETU_BASE_URL
@@ -46,9 +49,9 @@ class Create_Document(APIView):
             data = {
                 "name": name
             }
-            print("HEADERS:", headers)
-            print("FILES:", files.keys())
-            print("DATA:", data)
+            # Log headers and payload
+            logger.info(f"Sending request to Setu with headers: {headers}")
+            logger.info(f"Payload: {data}, file: {file.name}")
             # Forward request to Setu
             response = requests.post(
                 f"{SETU_BASE_URL}/documents",
@@ -56,6 +59,7 @@ class Create_Document(APIView):
                 files=files,
                 headers=headers
             )
+            logger.info(f"Setu response: {response.status_code} {response.text}")
             try:
                 body = response.json()  # try parsing as JSON
             except ValueError:
