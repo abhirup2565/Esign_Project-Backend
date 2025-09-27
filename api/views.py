@@ -46,6 +46,9 @@ class Create_Document(APIView):
             data = {
                 "name": name
             }
+            print("HEADERS:", headers)
+            print("FILES:", files.keys())
+            print("DATA:", data)
             # Forward request to Setu
             response = requests.post(
                 f"{SETU_BASE_URL}/documents",
@@ -53,9 +56,6 @@ class Create_Document(APIView):
                 files=files,
                 headers=headers
             )
-            print("HEADERS:", headers)
-            print("FILES:", files.keys())
-            print("DATA:", data)
             try:
                 body = response.json()  # try parsing as JSON
             except ValueError:
