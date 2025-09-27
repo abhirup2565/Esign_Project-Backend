@@ -156,3 +156,18 @@ SETU_BASE_URL = os.getenv("SETU_BASE_URL")
 X_CLIENT_ID = os.getenv("X-CLIENT-ID")
 X_CLIENT_SECRET = os.getenv("X-CLIENT-SECRET")
 X_PRODUCT_INSTANCE_ID = os.getenv("X-PRODUCT-INSTANCE-ID")
+
+#Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',  # Change to DEBUG for more verbose logs
+    },
+}
