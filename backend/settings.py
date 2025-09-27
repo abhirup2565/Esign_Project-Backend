@@ -151,7 +151,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 
-# Now you can use environment variables
+# using environment variables
 SETU_BASE_URL = os.getenv("SETU_BASE_URL")
 X_CLIENT_ID = os.getenv("X-CLIENT-ID")
 X_CLIENT_SECRET = os.getenv("X-CLIENT-SECRET")
