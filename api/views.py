@@ -53,7 +53,12 @@ class Create_Document(APIView):
                 files=files,
                 headers=headers
             )
-            return Response(response.json(), status=response.status_code)
+            try:
+                body = response.json()  # try parsing as JSON
+            except ValueError:
+                body = {"raw_response": response.text}  # fallback to text
+
+            return Response(body, status=response.status_code)
 
         except Exception as e:
             print("SIGNATURE ERROR:", e)
