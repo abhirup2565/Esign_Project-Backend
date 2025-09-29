@@ -27,6 +27,7 @@ Scheduler: APScheduler
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/abhirup2565/Esign_Project-Backend.git
+cd Esign_Project-Backend
 ```
 
 ### 2. Create & activate virtual environment
