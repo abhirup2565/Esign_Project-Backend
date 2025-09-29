@@ -79,23 +79,12 @@ pip install -r requirements.txt
 ```
 
 ### 3. Database Configuration
-The database configuration is in backend/settings.py<br>
-This project supports two database setups:<br>
-1)SQLite:
+The database default to local sqlite <br>
+To use external database like postgres. <br>
+SET DATABASE_URL variable in .env file.<br>
+Example:
 ```bash
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-```
-2)PostgreSQL
-```bash
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DIRECT_URL'))
-}
+DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
 
 ### 5. Configure environment variables:
