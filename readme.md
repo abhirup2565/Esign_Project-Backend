@@ -6,20 +6,20 @@ It provides secure APIs for user management, document uploads, and e-signature w
 -----------------------------------------------------
 
 🚀 Features
-JWT-based user authentication
-Role-based access (Manager & Employee)
-Document upload & storage
-Integration with Setu API for e-signatures
-APScheduler job for auto-updating signature status
-PostgreSQL on Supabase (with local SQLite option for dev)
+- JWT-based user authentication
+- Role-based access (Manager & Employee)
+- Document upload & storage
+- Integration with Setu API for e-signatures
+- APScheduler job for auto-updating signature status
+- PostgreSQL on Supabase (with local SQLite option for dev)
 
 -----------------------------------------------------
 
 ## ⚙️ Tech Stack
-Backend: Python, Django, Django REST Framework
-Database: PostgreSQL (Supabase) / SQLite (local dev)
-Auth: JWT (SimpleJWT)
-Scheduler: APScheduler
+- Backend: Python, Django, Django REST Framework
+- Database: PostgreSQL (Supabase) / SQLite (local dev)
+- Auth: JWT (SimpleJWT)
+- Scheduler: APScheduler
 
 ---
 
@@ -42,8 +42,8 @@ pip install -r requirements.txt
 ```
 
 ### 3. Databse Configuration
-The database configuration is in settings.py
-This project supports two database setups:
+The database configuration is in backend/settings.py<br>
+This project supports two database setups:<br>
 1)SQLite:
 ```bash
 DATABASES = {
@@ -62,7 +62,7 @@ DATABASES = {
 ```
 
 ### 5. Configure environment variables:
-Create a .env file in the backend folder. You’ll need values from different services:
+Create a .env file in the backend folder. <br>You’ll need values from different services:
 | Variable                   | Where to Get It                                                       | Description                                       |
 | -------------------------- | --------------------------------------------------------------------- | ------------------------------------------------- |
 | `SECRET_KEY`               | Generate using `django.core.management.utils.get_random_secret_key()` | Required by Django for security                   |
@@ -72,7 +72,7 @@ Create a .env file in the backend folder. You’ll need values from different se
 | `SETU_PRODUCT_INSTANCE_ID` | From Setu Dashboard                                                   | Unique identifier for your Setu product instance  |
 
 
-example .env
+Example .env
 ```bash
 SECRET_KEY=your_django_secret
 DATABASE_URL=postgresql://user:password@host:5432/dbname
@@ -98,9 +98,10 @@ python manage.py runserver
 
 ## ⏳ Background Jobs (APScheduler)
 The backend uses APScheduler to automatically keep signature statuses in sync with Setu.
-Task: Periodically polls Setu for the status of pending signatures.
-Database Update: Updates the corresponding records in the database once the status changes.
-Polling Interval: Configurable inside backend/api/scheduler.py <br> ⚠️ Note: If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
+- Task: Periodically polls Setu for the status of pending signatures.
+- Database Update: Updates the corresponding records in the database once the status changes.
+- Polling Interval: Configurable inside backend/api/scheduler.py
+- ⚠️ Note: If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
 Scheduler Example (from scheduler.py):
 ```bash
 def start_scheduler():
@@ -111,9 +112,9 @@ def start_scheduler():
     # Graceful shutdown on exit
     atexit.register(lambda: scheduler.shutdown())
 ```
-Disabling APScheduler
-disable it by setting ENABLE_SCHEDULER=false in your .env
-example of .env
+**Disabling APScheduler**:<br>
+Disable APScheduler by setting ENABLE_SCHEDULER=false in your .env <br>
+Example of .env
 ```bash
 ENABLE_SCHEDULER=false
 ```
