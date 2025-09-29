@@ -27,31 +27,38 @@ Scheduler: APScheduler
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/abhirup2565/Esign_Project-Backend.git
-cd signflow-backend
+```
 
 ### 2. Create & activate virtual environment
+```bash
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
+```
 
 ### 3. Install dependency 
+```bash
 pip install -r requirements.txt
+```
 
 ### 3. Databse Configuration
 The database configuration is in settings.py
 This project supports two database setups:
 1)SQLite:
+```bash
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+```
 2)PostgreSQL
+```bash
 import dj_database_url
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DIRECT_URL'))
 }
-
+```
 
 ### 5. Configure environment variables:
 Create a .env file in the backend folder. You’ll need values from different services:
@@ -63,7 +70,9 @@ Create a .env file in the backend folder. You’ll need values from different se
 | `SETU_CLIENT_SECRET`       | From Setu Dashboard                                                   | Secret key for API authentication                 |
 | `SETU_PRODUCT_INSTANCE_ID` | From Setu Dashboard                                                   | Unique identifier for your Setu product instance  |
 
+
 example .env
+```bash
 SECRET_KEY=your_django_secret
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 
@@ -72,13 +81,17 @@ SETU_CLIENT_SECRET=xxxx
 SETU_PRODUCT_INSTANCE_ID=xxxx
 
 ENABLE_SCHEDULER=true
-
+```
 
 ### 6. Run migrations
+```bash
 python manage.py migrate
+```
 
 ### 7 .Start server
+```bash
 python manage.py runserver
+```
 
 -----------------------------------------------------
 
@@ -89,6 +102,7 @@ Database Update: Updates the corresponding records in the database once the stat
 Polling Interval: Configurable inside backend/api/scheduler.py
 ⚠️ Note: If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
 Scheduler Example (from scheduler.py):
+```bash
 def start_scheduler():
     # Poll signature status every 10 seconds
     scheduler.add_job(poll_signature, 'interval', seconds=10)
@@ -96,9 +110,13 @@ def start_scheduler():
 
     # Graceful shutdown on exit
     atexit.register(lambda: scheduler.shutdown())
-
+```
 Disabling APScheduler
 disable it by setting ENABLE_SCHEDULER=false in your .env
+example of .env
+```bash
+ENABLE_SCHEDULER=false
+```
 
 -----------------------------------------------------
 
