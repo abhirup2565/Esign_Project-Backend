@@ -17,7 +17,7 @@ SECRET_KEY = 'django-insecure-gq^=%j(^jf0=#ltq36h*bodm*qw^)p8c-&rfdf#1a7ji-(_7*8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["esign-project-backend.onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -68,18 +68,27 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database for Postgres(supabase)
-import dj_database_url
+# Check if we have a database URL (production/Supabase)
+DATABASE_URL = os.getenv("DIRECT_URL")
+
+if DATABASE_URL:
+    # Use PostgreSQL (or any URL-based database)
+    import dj_database_url
+    DATABASES = {
+        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    }
+else:
+    # Fallback to local SQLite for development
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DIRECT_URL'))
 }
-# Databse for local SQLite
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 # Password validation

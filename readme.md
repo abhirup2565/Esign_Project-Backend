@@ -24,13 +24,49 @@ It provides secure APIs for user management, document uploads, and e-signature w
 
 ---
 
-## 🛠️ Setup Instructions
+## 🛠️ Setup Instructions(With and Without 🐳Docker)
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/abhirup2565/Esign_Project-Backend.git
 cd Esign_Project-Backend
 ```
+### 🐳 Running with Docker
+## 2. Environment Variables
+The service loads environment variables from the .env file.<br>
+The docker-compose.yml mounts your project folder into the container<br>
+**Create a .env file in the root of your project**<br>
+You’ll need values from different services:<br>
+| Variable                   | Where to Get It                                                       | Description                                       |
+| -------------------------- | --------------------------------------------------------------------- | ------------------------------------------------- |
+| `SECRET_KEY`               | Generate using `django.core.management.utils.get_random_secret_key()` | Required by Django for security                   |
+| `DATABASE_URL`             | From [Supabase project](https://supabase.com/)                        | PostgreSQL connection string (used in production) |
+| `SETU_CLIENT_ID`           | From [Setu Dashboard](https://docs.setu.co/dev-tools/bridge/overview) | Client ID for API authentication                  |
+| `SETU_CLIENT_SECRET`       | From Setu Dashboard                                                   | Secret key for API authentication                 |
+| `SETU_PRODUCT_INSTANCE_ID` | From Setu Dashboard                                                   | Unique identifier for your Setu product instance  |
 
+Example .env
+```bash
+SECRET_KEY=your_django_secret
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+SETU_CLIENT_ID=xxxx
+SETU_CLIENT_SECRET=xxxx
+SETU_PRODUCT_INSTANCE_ID=xxxx
+
+ENABLE_SCHEDULER=true
+```
+## 3. Build and Run Container
+```bash
+docker-compose up --build
+```
+This will:
+- Build the Docker image from the Dockerfile.
+- Start the backend project service.
+- Run migrations automatically.
+- Expose the app on http://localhost:8000
+
+
+### ⚙️ Local Development (Without Docker)
 ### 2. Create & activate virtual environment
 ```bash
 python -m venv venv
@@ -42,7 +78,7 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Databse Configuration
+### 3. Database Configuration
 The database configuration is in backend/settings.py<br>
 This project supports two database setups:<br>
 1)SQLite:
