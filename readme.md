@@ -1,7 +1,8 @@
 # SignFlow Backend (Django)
 
 This is the backend service for **SignFlow**, a digital contract signing platform.  
-It provides secure APIs for user management, document uploads, and e-signature workflows.
+It provides secure APIs for user management, document uploads, and e-signature workflows.<br>
+💡 Frontend Repository: The backend works together with the From [SignFlow Frontend](https://github.com/abhirup2565/Esign_Project.git) repository, which is a React-based application that interacts with these APIs.
 
 -----------------------------------------------------
 
@@ -106,7 +107,7 @@ Scheduler Example (from scheduler.py):
 ```bash
 def start_scheduler():
     # Poll signature status every 10 seconds
-    scheduler.add_job(poll_signature, 'interval', seconds=10)
+    scheduler.add_job(poll_signature, 'interval', seconds=15)
     scheduler.start()
 
     # Graceful shutdown on exit
