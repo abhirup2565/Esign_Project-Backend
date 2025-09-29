@@ -96,12 +96,11 @@ python manage.py runserver
 
 -----------------------------------------------------
 
-⏳ Background Jobs (APScheduler)
+## ⏳ Background Jobs (APScheduler)
 The backend uses APScheduler to automatically keep signature statuses in sync with Setu.
 Task: Periodically polls Setu for the status of pending signatures.
 Database Update: Updates the corresponding records in the database once the status changes.
-Polling Interval: Configurable inside backend/api/scheduler.py
-⚠️ Note: If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
+Polling Interval: Configurable inside backend/api/scheduler.py <br> ⚠️ Note: If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
 Scheduler Example (from scheduler.py):
 ```bash
 def start_scheduler():
@@ -121,7 +120,7 @@ ENABLE_SCHEDULER=false
 
 -----------------------------------------------------
 
-📡 API Endpoints
+## 📡 API Endpoints
 🔑 Authentication
 | Endpoint              | Method | Description                        |
 | --------------------- | ------ | ---------------------------------- |
