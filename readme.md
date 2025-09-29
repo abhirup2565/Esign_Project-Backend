@@ -1,8 +1,17 @@
 # SignFlow Backend (Django)
 
 This is the backend service for **SignFlow**, a digital contract signing platform.  
-It provides secure APIs for user management, document uploads, and e-signature workflows.<br>
-💡 Frontend Repository: The backend works together with the From [SignFlow Frontend](https://github.com/abhirup2565/Esign_Project.git) repository, which is a React-based application that interacts with these APIs.
+SignFlow is a digital contract signing platform that enables organizations to manage, sign, and track documents seamlessly. It supports two types of users — Managers and Employees — each with different capabilities to keep workflows secure and streamlined.
+
+Managers can onboard new users, upload documents, and initiate signing requests. They can also sign documents themselves, track the progress of documents assigned to employees, and download the final signed copies once the signing process is complete.
+
+Employees, on the other hand, get a simplified experience where they can view documents assigned to them, sign when required, monitor the signing status, and download completed documents.
+
+Behind the scenes, SignFlow integrates with Setu’s e-signature API to handle digital signatures. A background job powered by APScheduler ensures that signature statuses are periodically synced from Setu to the local database. This way, users always see the latest signing state without needing to manually refresh.
+
+The frontend (React) communicates with this Django REST API backend to provide a smooth, role-based workflow for managing contracts digitally.
+
+💡 Frontend Repository: The backend works together with [SignFlow Frontend](https://github.com/abhirup2565/Esign_Project.git) repository, which is a React-based application that interacts with these APIs.
 
 -----------------------------------------------------
 
