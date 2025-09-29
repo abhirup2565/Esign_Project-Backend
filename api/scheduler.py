@@ -52,8 +52,12 @@ def poll_signature():
             print(f"Error polling {signature.signature_id}: {e}")
 
 def start_scheduler():
+    """
+    If you are running locally on SQLite, avoid using very short intervals (e.g., below 15 seconds). SQLite does not handle concurrent writes well, which can lead to database locking issues. For production, a more robust database like PostgreSQL is recommended.
+    """
     # Schedule polling every 10 seconds
     scheduler.add_job(poll_signature, 'interval', seconds=10)
     scheduler.start()
+
     # Shut down gracefully on exit
     atexit.register(lambda: scheduler.shutdown())
