@@ -7,7 +7,7 @@ Managers can onboard new users, upload documents, and initiate signing requests.
 
 Employees, on the other hand, get a simplified experience where they can view documents assigned to them, sign when required, monitor the signing status, and download completed documents.
 
-Behind the scenes, SignFlow integrates with Setu’s e-signature API to handle digital signatures. A background job powered by APScheduler ensures that signature statuses are periodically synced from Setu to the local database. This way, users always see the latest signing state without needing to manually refresh.
+Behind the scenes, SignFlow integrates with Setu’s e-signature API to handle digital signatures. A background job powered by APScheduler ensures that signatures status are periodically synced from Setu to the local database. This way, users always see the latest signing state without needing to manually refresh.
 
 The frontend (React) communicates with this Django REST API backend to provide a smooth, role-based workflow for managing contracts digitally.
 
@@ -15,7 +15,7 @@ The frontend (React) communicates with this Django REST API backend to provide a
 
 -----------------------------------------------------
 
-🚀 Features
+## 🚀 Features
 - JWT-based user authentication
 - Role-based access (Manager & Employee)
 - Document upload & storage
